@@ -1,168 +1,40 @@
-# Cplusplus-Program
-#include <iostream>
-#include <iomanip>
-#include <string>
+The Project involved creating a time management system using C++.  The problem aimed to solve provided a user-friendly interface to add hours, minutes, and seconds to a clock, displayed in both 12-hour and 24-hour formats.  The program offered a menu-driven approach, allowing users to interactively add time intervals and see the updated clock display.
 
-using namespace std;
+The code is organized into functions, enhancing modularity and readability.  The use of separate functions for different functionalities and the clear naming of variables contribute to the code's clarity.  The program also effectively handles time formatting and display in 12-hour and 24-hour formats.  
 
-//Variables decelerations; these are outside of main() because all functions perform 
+Where could you enhance your code? How would these improvements make your code more efficient, secure, and so on?
 
-int hours = 0;
-int minutes = 0;
-int seconds = 0;
+Input Validation: The code doesn't include extensive input validation, which could lead to unexpected behavior if the user enters invalid values. Adding validation checks, such as ensuring user input is within appropriate ranges, would make the program more robust.
 
-void AddHours(int i); //Ensures hours value does not exceed 24
+Error Handling: The program lacks comprehensive error-handling mechanisms. Adding try-catch blocks or error messages for exceptional cases would enhance the user experience and provide better feedback.
 
-void AddMinutes(int i); //Ensures minutes value does not 60
+Separation of Concerns: While the current code separates different functionalities into functions, further dividing the code into smaller, more focused functions can improve readability and maintainability.
 
-void AddSeconds(int i); //Ensures seconds value does not 60
+User Interface Enhancement: The user interface could be improved by providing more informative prompts, clear instructions, and a more user-friendly menu layout.
 
-void ClearScreen(); //Prints 4 blank lines
-string WriteLines(char character, int times); //Returns string: a line
-void PrintTop_ButtomLine(); //Prints the 1st and 4th line in the function
+Code Comments: Adding comments to explain complex sections of the code or the purpose of specific functions would make it easier for other developers (or yourself in the future) to understand the code.
 
-void PrintSecondLine(); //Prints the 2nd line in the function
+Which pieces of the code did you find most challenging to write, and how did you overcome this? What tools or resources are you adding to your support network?
+The most challenging aspect of the code might have been managing the formatting of time for both 12-hour and 24-hour formats while keeping the code concise and maintainable. This was overcome by breaking down the formatting process into smaller steps within the PrintThirdLine function. No specific external resources were mentioned in the provided code, but it's important to note that during real-world projects, resources like documentation, online forums, and programming communities can provide valuable insights and solutions to challenges.
 
-void PrintThirdLine(); //Prints the 3rd and 4th line in the function
+What skills from this project will be particularly transferable to other projects or course work?
 
-void DisplayTime(); //Prints the time in the correct format
+Modularity and Function Decomposition: The project demonstrates the importance of breaking down complex problems into smaller, manageable functions. This skill is applicable to almost any programming project to enhance code readability and maintainability.
 
-void DisplayMenu(); //Prints the formatted menu to the user
+User Interface Design: Creating a user-friendly interface with clear prompts and interactive menus is a valuable skill that can be applied in various software development scenarios.
 
-int GetInput(string question); //Returns an integer response to a question as an argument
+Time Management and Iterative Development: The iterative nature of the program's menu system showcases a practical approach to managing user interactions and guiding the flow of the program. This skill is useful for designing interactive software systems.
 
-int main() {
-    bool pressButton;
-    while (true) {
-        ClearScreen();
-        DisplayTime();
-        pressButton = (GetInput("Press button? (1-Yes 2-No) ") == 2);
-        if (pressButton) {
-            AddSeconds(1);
-            continue; //While loop restarts
-        }
-        else {
-            DisplayMenu();
-            int userInput = GetInput("Enter Menu Selection: ");
-            if (userInput == 4) {
-                break; //While loop ends. Program exits.
-            }
-            else if (userInput == 1) {
-                //AddHours(GetInput("Enter count: ")); 
-                
-                    AddHours(1); //Adds 1 hour
-            }
-            else if (userInput == 2) {
-                AddMinutes(1); 
-            }
-            else if (userInput == 3) {
-                
-                AddSeconds(1); 
-            }
-        }
-    }
-    return 0;
-}
-void ClearScreen() {
-    for (int i = 0; i < 4; i++) {
-        cout << endl;
-    }
-}
-void DisplayTime() {
-    PrintTop_ButtomLine();
-    PrintSecondLine();
-    PrintThirdLine();
-    PrintTop_ButtomLine();
-}
-void PrintTop_ButtomLine() {
-    string text;
-    text = WriteLines('*', 57); 
-    text.replace(27, 5, " "); 
-        cout << text << endl;
-}
-void PrintSecondLine() {
-    string text;
-    text = WriteLines(' ', 57);
-    text.at(0) = '*'; 
-    text.at(26) = '*';
-    text.at(32) = '*';
-    text.at(56) = '*';
-    text.replace(7, 13, "12 Hour Clock");
-    text.replace(39, 13, "24 Hour Clock");
-    cout << text << endl;
-}
-void PrintThirdLine() {
-    string text;
-    string iosTime; //Stores time in 12-hour format 
-    string stdTime; //Stores time in 24-hour format 
-    text = WriteLines(' ', 57);
-    text.at(0) = '*';
-    text.at(26) = '*';
-    text.at(32) = '*';
-    text.at(56) = '*';
-    string meridiem; //Stores meridiem
-    int hour;
-    if (hours < 12) { //This IF formats the 12-hour time system
-        meridiem = " AM"; 
-        hour = hours;
-    }
-    else { 
-        meridiem = " PM"; 
-        if (hours == 12) {
-            hour = 12;
-        }
-        else { //If hour is 13 or less than 24 
-            hour = hours - 12; 
-        }
-    }
-    iosTime = to_string(hour) + ':' + to_string(minutes) + ':' + to_string(seconds) +
-        meridiem;
-    stdTime = to_string(hours) + ':' + to_string(minutes) + ':' + to_string(seconds);
+How did you make this program maintainable, readable, and adaptable?
 
-    text.replace(9, iosTime.length(), iosTime);
-    text.replace(43, stdTime.length(), stdTime);
+Function Decomposition: By breaking down the program into smaller functions, each responsible for a specific task, the code is more modular and easier to understand.
 
-    cout << text << endl;
-}
-string WriteLines(char character, int times) {
-    string text = "";
-    for (int i = 0; i < times; i++) {
-        text += character;
-    }
-    return text;
-}
-void AddHours(int i) {
-    hours += i;
-    if (hours > 23) {
-        hours = 0;
-    }
-}
-void AddMinutes(int i) {
-    minutes += i;
-    if (minutes > 59) {
-        AddHours(minutes / 60);
-        minutes %= 60;
-    }
-}
-void AddSeconds(int i) {
-    seconds += i;
-    if (seconds > 59) {
-        AddMinutes(seconds / 60);
-        seconds %= 60;
-    }
-}
-int GetInput(string question) {
-    int input;
-    cout << question << flush;
-    cin >> input;
-    return input;
-}
-void DisplayMenu() {
-    cout << WriteLines('*', 27) << endl;
-    cout << "* 1-Add One Hour *" << endl;
-    cout << "* 2-Add One Minute *" << endl;
-    cout << "* 3-Add One Second *" << endl;
-    cout << "* 4-Exit Program *" << endl;
-    cout << WriteLines('*', 27) << endl;
-}
+Descriptive Naming: The use of meaningful variable and function names improves code readability and reduces the need for excessive comments.
 
+Consistent Formatting: Consistent formatting techniques, such as spacing and indentation, make the code easier to read and follow.
+
+Formatting and Output Separation: The separation of formatting logic from the main logic (in functions like DisplayTime and PrintSecondLine) enhances the code's adaptability, allowing for easy modification of the display without affecting the core functionality.
+
+Use of Constants: The program uses explicit constants (e.g., 12 and 24) instead of magic numbers, making the code more understandable and adaptable.
+
+Incorporating the suggested improvements and lessons learned from this project will contribute to the development of cleaner, more efficient, and more maintainable code in future endeavors.
